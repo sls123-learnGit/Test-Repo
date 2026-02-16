@@ -19,8 +19,13 @@ jobs:
                 aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
                 aws-region: ${{ secrets.AWS_S3_BUCKET_REGION }}
 
+            - name: Debug Permissions
+              run: |
+                aws sts get-caller-identity
+                aws s3api get-bucket-location --bucket ${{ secrets.AWS_S3_BUCKET }}
+
             - name: Upload to S3
-              run: aws s3 cp latest-bundle.zip s3://${{ secrets.AWS_S3_BUCKET }}/repo-${{ github.sha }}/latest-bundle.zip
+              run: aws s3 cp latest-bundle.zip s3://${{ secrets.AWS_S3_BUCKET }}/repo-${{ github.sha }}/latest-bundle.zip --acl bucket-owner-full-control
 
 
 
