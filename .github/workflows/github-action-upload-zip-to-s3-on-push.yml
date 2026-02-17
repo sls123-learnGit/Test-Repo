@@ -11,6 +11,14 @@ jobs:
             - name: Zip Repository
               run: zip -r latest-bundle.zip . -x "*.git*"
 
+            - name: Configure AWS Credentials
+              uses: aws-actions/configure-aws-credentials@v4
+              with:
+                aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+                aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+                aws-region: ${{ secrets.AWS_S3_BUCKET_REGION }}
+                role-to-assume: arn:aws:iam::732930084772:role/PCSKDeveloperRole
+
             - name: Set AWS Role
               run: aws sts assume-role --role-arn "arn:aws:iam::732930084772:role/PCSKDeveloperRole" --role-session-name UploadSession
 
