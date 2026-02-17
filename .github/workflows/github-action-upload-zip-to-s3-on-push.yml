@@ -1,6 +1,9 @@
 name: Github Action Upload Zip to S3 on Push
 run-name: ${{ github.actor }} triggered the workflow
 on: [push]
+permissions:
+  id-token: write
+  contents: read
 jobs:
     create-zip:
         runs-on: ubuntu-latest
